@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 
+from chat.server import ScreenHost
+from chat.client import ScreenJoin
 
 class Launcher():
 
@@ -8,7 +10,7 @@ class Launcher():
 
         # Tkinter root
         self.root = tk.Tk()
-        self.root.title("")
+        self.root.title("launcher")
         self.root.resizable(False, False)
 
         # Tkinter frame
@@ -28,9 +30,10 @@ class Launcher():
         self.root.mainloop()
     
     def handle_load(self, type):
-        new_toplevel = tk.Toplevel(self.root)
-        new_toplevel.title(type)
-        new_toplevel.resizable(False, False)
+        if type == "Join":
+            ScreenJoin()
+        elif type == "Host":
+            ScreenHost()
 
 
 Launcher()
