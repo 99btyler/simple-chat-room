@@ -18,22 +18,22 @@ class Launcher():
         self.frame.grid()
 
         # Tkinter widgets
-        self.button_join = ttk.Button(self.frame, text="Join", command=lambda: self.handle_load("Join"))
-        self.button_join["padding"] = 50
-        self.button_join.grid(column=0, row=0)
-
         self.button_host = ttk.Button(self.frame, text="Host", command=lambda: self.handle_load("Host"))
         self.button_host["padding"] = 50
-        self.button_host.grid(column=0, row=1)
+        self.button_host.grid(column=0, row=0)
+
+        self.button_join = ttk.Button(self.frame, text="Join", command=lambda: self.handle_load("Join"))
+        self.button_join["padding"] = 50
+        self.button_join.grid(column=0, row=1)
 
         # Tkinter mainloop
         self.root.mainloop()
     
     def handle_load(self, type):
-        if type == "Join":
-            ScreenJoin()
-        elif type == "Host":
+        if type == "Host":
             ScreenHost()
+        elif type == "Join":
+            ScreenJoin()
 
 
 Launcher()
