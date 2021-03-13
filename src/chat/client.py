@@ -4,8 +4,8 @@ from tkinter import ttk
 
 class ScreenJoin():
 
-    def __init__(self):
+    def __init__(self, title):
         self.toplevel = tk.Toplevel()
-        self.toplevel.title("join")
+        self.toplevel.title(title)
         self.toplevel.resizable(False, False)
 
