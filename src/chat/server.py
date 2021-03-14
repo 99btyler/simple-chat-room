@@ -1,12 +1,10 @@
 import socket
 import threading
-import tkinter as tk
-from tkinter import ttk
 
 
 class Hoster():
 
-    def __init__(self, toplevel):
+    def __init__(self):
 
         self.HOST = socket.gethostbyname("localhost")
         self.PORT = 5050
@@ -21,10 +19,6 @@ class Hoster():
         except:
             print(f"{self.ADDRESS} is already being used")
             return
-
-        # Tkinter widgets
-        self.label_ipv4 = tk.Label(toplevel, text=self.HOST)
-        self.label_ipv4.grid()
     
     def start(self):
         self.server.listen()

@@ -43,8 +43,12 @@ class Launcher():
         toplevel.resizable(False, False)
 
         if type == "host":
-            Hoster(toplevel)
+
+            label_ipv4 = tk.Label(toplevel, text="...")
+            label_ipv4.grid()
+
             self.launched_host = True
+
         elif type == "join":
             Joiner(toplevel)
 
