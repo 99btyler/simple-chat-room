@@ -8,12 +8,6 @@ class ScreenHost():
 
     def __init__(self, title):
 
-        # Tkinter widgets
-        self.toplevel = tk.Toplevel()
-        self.toplevel.title(title)
-        self.toplevel.resizable(False, False)
-
-        # Server stuff
         self.HOST = socket.gethostbyname("localhost")
         self.PORT = 5050
         self.ADDRESS = (self.HOST, self.PORT)
@@ -28,7 +22,19 @@ class ScreenHost():
             print(f"{self.ADDRESS}: this is already being used")
             return
 
-        threading.Thread(target=self.start).start()
+        # Tkinter widgets
+        self.toplevel = tk.Toplevel()
+        self.toplevel.title(title)
+        self.toplevel.resizable(False, False)
+
+        self.label_ipv4 = tk.Label(self.toplevel, text=self.HOST)
+        self.label_ipv4.grid()
+
+        self.button_start = tk.Button(self.toplevel, text="Start")
+        self.button_start.grid()
+
+        self.button_stop = tk.Button(self.toplevel, text="Stop")
+        self.button_stop.grid()
     
     def start(self):
         self.server.listen()
