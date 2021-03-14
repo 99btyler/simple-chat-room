@@ -19,7 +19,7 @@ class Hoster():
         try:
             self.server.bind(self.ADDRESS)
         except:
-            print(f"{self.ADDRESS}: this is already being used")
+            print(f"{self.ADDRESS} is already being used")
             return
 
         # Tkinter widgets
@@ -34,7 +34,7 @@ class Hoster():
     
     def start(self):
         self.server.listen()
-        print(f"{self.ADDRESS}: server is now listening")
+        print(f"{self.ADDRESS} is now listening")
         while True:
             connection, address = self.server.accept() # waits until a client connects
             threading.Thread(target=self.handle_client, args=(connection, address)).start()
