@@ -16,6 +16,7 @@ class Hoster():
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             self.server.bind(self.ADDRESS)
+            print(f"{self.ADDRESS} was available!")
         except:
             print(f"{self.ADDRESS} is already being used")
             return
@@ -31,10 +32,10 @@ class Hoster():
         print(f"{self.ADDRESS}: {address} connected")
         connected = True
         while connected:
-            data = connection.recv(HEADER).decode(FORMAT) # waits until the client sends message
+            data = connection.recv(self.HEADER).decode(self.FORMAT) # waits until the client sends message
             if data:
                 message_length = int(data)
-                message = connection.recv(message_length).decode(FORMAT)
-                print(f"{self.ADDRESS}: {address} sent \"{message}\"")
+                message = connection.recv(message_length).decode(self.FORMAT)
+                print(f"{self.ADDRESS}: \"{message}\" sent by {address}")
         connection.close()
 
