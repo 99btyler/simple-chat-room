@@ -25,12 +25,6 @@ class Hoster():
         # Tkinter widgets
         self.label_ipv4 = tk.Label(toplevel, text=self.HOST)
         self.label_ipv4.grid()
-
-        self.button_start = tk.Button(toplevel, text="Start")
-        self.button_start.grid()
-
-        self.button_stop = tk.Button(toplevel, text="Stop")
-        self.button_stop.grid()
     
     def start(self):
         self.server.listen()
