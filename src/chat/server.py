@@ -4,9 +4,9 @@ import tkinter as tk
 from tkinter import ttk
 
 
-class ScreenHost():
+class Hoster():
 
-    def __init__(self, title):
+    def __init__(self, toplevel):
 
         self.HOST = socket.gethostbyname("localhost")
         self.PORT = 5050
@@ -23,17 +23,13 @@ class ScreenHost():
             return
 
         # Tkinter widgets
-        self.toplevel = tk.Toplevel()
-        self.toplevel.title(title)
-        self.toplevel.resizable(False, False)
-
-        self.label_ipv4 = tk.Label(self.toplevel, text=self.HOST)
+        self.label_ipv4 = tk.Label(toplevel, text=self.HOST)
         self.label_ipv4.grid()
 
-        self.button_start = tk.Button(self.toplevel, text="Start")
+        self.button_start = tk.Button(toplevel, text="Start")
         self.button_start.grid()
 
-        self.button_stop = tk.Button(self.toplevel, text="Stop")
+        self.button_stop = tk.Button(toplevel, text="Stop")
         self.button_stop.grid()
     
     def start(self):
