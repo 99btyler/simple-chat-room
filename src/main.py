@@ -38,10 +38,12 @@ class Launcher():
     
     def launch(self, type):
 
+        # create the pop-up window
         toplevel = tk.Toplevel()
         toplevel.title(type)
         toplevel.resizable(False, False)
 
+        # add widgets to it
         if type == "host":
 
             label_ipv4 = tk.Label(toplevel, text="...")
@@ -50,7 +52,7 @@ class Launcher():
             self.launched_host = True
 
         elif type == "join":
-            Joiner(toplevel)
+            pass
 
 
 Launcher()
