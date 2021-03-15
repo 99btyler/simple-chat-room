@@ -42,6 +42,7 @@ class Launcher():
         if not self.server.socket == None:
             self.server.socket.close()
             self.server.socket = None
+        
         if not self.server.toplevel == None:
             self.server.toplevel.destroy()
             self.server.toplevel = None
