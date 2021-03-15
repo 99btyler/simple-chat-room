@@ -30,6 +30,7 @@ class Server():
 
         self.HEADER = 64
         self.FORMAT = "utf-8"
+        self.COMMAND_DISCONNECT = "!disconnect"
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
@@ -59,12 +60,17 @@ class Server():
             if data:
                 message_length = int(data)
                 message = connection.recv(message_length).decode(self.FORMAT)
+                if message == self.COMMAND_DISCONNECT:
+                    print(f"{self.ADDRESS}: {address} disconnected")
+                    break
                 print(f"{self.ADDRESS}: \"{message}\" sent by {address}")
         connection.close()
     
     def handle_close(self):
+
         self.socket.close()
         self.socket = None
+
         self.toplevel.destroy()
         self.toplevel = None
 
