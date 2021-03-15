@@ -40,6 +40,10 @@ class Server():
             print(e)
         
         threading.Thread(target=self.listen_for_clients).start()
+
+        # toplevel widgets
+        label_address = tk.Label(self.toplevel, text=f"{self.HOST} • {self.PORT}")
+        label_address.grid()
         
     def listen_for_clients(self):
         self.socket.listen()
