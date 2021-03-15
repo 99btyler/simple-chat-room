@@ -24,13 +24,13 @@ class Server():
         if not self.socket == None:
             return
         
-        self.HOST = socket.gethostbyname("localhost")
-        self.PORT = 5050
-        self.ADDRESS = (self.HOST, self.PORT)
-
         self.HEADER = 64
         self.FORMAT = "utf-8"
         self.COMMAND_DISCONNECT = "!disconnect"
+        
+        self.HOST = socket.gethostbyname("localhost")
+        self.PORT = 5050
+        self.ADDRESS = (self.HOST, self.PORT)
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
