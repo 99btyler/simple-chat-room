@@ -1,10 +1,28 @@
 import socket
+import tkinter as tk
 
 
-class Joiner():
+class Client():
 
     def __init__(self):
+        self.toplevel = None
+        self.socket = None
+    
+    def launch(self):
 
+        # toplevel
+        if not self.toplevel == None:
+            return
+        
+        self.toplevel = tk.Toplevel()
+        self.toplevel.title("client")
+        self.toplevel.resizable(False, False)
+        self.toplevel.protocol("WM_DELETE_WINDOW", self.handle_close)
+
+        # socket
+        if not self.socket == None:
+            return
+        
         self.HOST = socket.gethostbyname("localhost")
         self.PORT = 5050
         self.ADDRESS = (self.HOST, self.PORT)
@@ -12,16 +30,11 @@ class Joiner():
         self.HEADER = 64
         self.FORMAT = "utf-8"
 
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect(self.ADDRESS)
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
-    def send_message(self, message):
-
-        data = message.encode(self.FORMAT)
-
-        pre_data = str(len(data)).encode(self.FORMAT)
-        pre_data += (b" " * (self.HEADER - len(pre_data)))
-        self.client.send(pre_data)
-
-        self.client.send(data)
+    def handle_close(self):
+        self.socket.close()
+        self.socket = None
+        self.toplevel.destroy()
+        self.toplevel = None
 
