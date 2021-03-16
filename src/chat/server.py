@@ -36,11 +36,9 @@ class Server():
         try:
             self.socket.bind(self.ADDRESS)
             print(f"{self.ADDRESS} was available!")
-            print(f"{self.ADDRESS} is ready to listen")
+            threading.Thread(target=self.listen_for_clients).start()
         except Exception as e:
             print(e)
-        
-        threading.Thread(target=self.listen_for_clients).start()
 
         # toplevel widgets
         label_address = tk.Label(self.toplevel, text=f"{self.HOST} • {self.PORT}")
@@ -57,12 +55,12 @@ class Server():
         print(f"{self.ADDRESS}: {address} connected")
         while True:
             data = connection.recv(self.HEADER).decode(self.FORMAT) # waits until the client sends message
-            if data:
-                message_length = int(data)
-                message = connection.recv(message_length).decode(self.FORMAT)
-                if message == self.COMMAND_DISCONNECT:
-                    print(f"{self.ADDRESS}: {address} disconnected")
-                    break
+            message_length = int(data)
+            message = connection.recv(message_length).decode(self.FORMAT)
+            if message == self.COMMAND_DISCONNECT:
+                print(f"{self.ADDRESS}: {address} disconnected")
+                break
+            else:
                 print(f"{self.ADDRESS}: \"{message}\" sent by {address}")
         connection.close()
     
