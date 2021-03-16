@@ -58,11 +58,11 @@ class Server():
             message_length = int(data)
             message = connection.recv(message_length).decode(self.FORMAT)
             if message == self.COMMAND_DISCONNECT:
-                print(f"{self.ADDRESS}: {address} disconnected")
                 break
             else:
                 print(f"{self.ADDRESS}: \"{message}\" sent by {address}")
         connection.close()
+        print(f"{self.ADDRESS}: {address} disconnected")
     
     def handle_close(self):
 
