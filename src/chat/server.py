@@ -48,21 +48,21 @@ class Server():
         self.socket.listen()
         print(f"{self.ADDRESS} is now listening...")
         while True:
-            connection, address = self.socket.accept() # waits until a client connects
-            threading.Thread(target=self.handle_client, args=(connection, address)).start()
+            client_socket, client_address = self.socket.accept() # waits until a client connects
+            threading.Thread(target=self.handle_client, args=(client_socket, client_address)).start()
     
-    def handle_client(self, connection, address):
-        print(f"{self.ADDRESS}: {address} connected")
+    def handle_client(self, client_socket, client_address):
+        print(f"{self.ADDRESS}: {client_address} connected")
         while True:
-            data = connection.recv(self.HEADER).decode(self.FORMAT) # waits until the client sends message
+            data = client_socket.recv(self.HEADER).decode(self.FORMAT) # waits until the client sends message
             message_length = int(data)
-            message = connection.recv(message_length).decode(self.FORMAT)
+            message = client_socket.recv(message_length).decode(self.FORMAT)
             if message == self.COMMAND_DISCONNECT:
                 break
             else:
-                print(f"{self.ADDRESS}: \"{message}\" sent by {address}")
-        connection.close()
-        print(f"{self.ADDRESS}: {address} disconnected")
+                print(f"{self.ADDRESS}: \"{message}\" sent by {client_address}")
+        client_socket.close()
+        print(f"{self.ADDRESS}: {client_address} disconnected")
     
     def handle_close(self):
 
