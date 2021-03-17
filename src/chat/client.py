@@ -1,4 +1,5 @@
 import socket
+import threading
 import tkinter as tk
 
 
@@ -34,7 +35,7 @@ class Client():
         self.entry_port = tk.Entry(self.toplevel, textvariable=self.stringvar_port)
         self.entry_port.grid(column=1, row=1)
 
-        self.button_connect = tk.Button(self.toplevel, text="Connect", command=self.handle_connect)
+        self.button_connect = tk.Button(self.toplevel, text="Connect", command=self.connect)
         self.button_connect.grid()
 
         # socket
@@ -46,7 +47,7 @@ class Client():
         self.PORT = None
         self.ADDRESS = None
     
-    def handle_connect(self):
+    def connect(self):
         
         # socket continued
         if not self.socket == None:
@@ -68,6 +69,31 @@ class Client():
         except Exception as e:
             print(e)
             self.socket = None
+            return
+        
+        threading.Thread(target=self.handle_messages).start()
+        
+        # more toplevel widgets
+        self.widgets_to_destroy = [self.label_host, self.entry_host, self.label_port, self.entry_port, self.button_connect]
+        for widget_to_destroy in self.widgets_to_destroy:
+            widget_to_destroy.destroy()
+        
+        self.text_messages = tk.Text(self.toplevel)
+        self.text_messages.grid()
+
+        self.stringvar_input = tk.StringVar()
+        self.entry_input = tk.Entry(self.toplevel, textvariable=self.stringvar_input)
+        self.entry_input.grid()
+
+        self.button_send = tk.Button(self.toplevel, text="Send", command=lambda:self.send_message(self.stringvar_input.get()))
+        self.button_send.grid()
+    
+    def handle_messages(self):
+        while not self.socket == None:
+            data = self.socket.recv(self.HEADER).decode(self.FORMAT)
+            message_length = int(data)
+            message = self.socket.recv(message_length).decode(self.FORMAT)
+            self.text_messages.insert(tk.END, f"{message}\n")
     
     def send_message(self, message):
         data = message.encode(self.FORMAT)

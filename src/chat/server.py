@@ -64,7 +64,7 @@ class Server():
             if message == self.COMMAND_DISCONNECT:
                 break
             else:
-                self.update_client_sockets(message)
+                self.update_client_sockets(f"{client_address}: {message}")
         client_socket.close()
         print(f"{self.ADDRESS}: {client_address} disconnected")
     
