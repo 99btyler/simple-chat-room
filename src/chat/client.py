@@ -70,13 +70,10 @@ class Client():
             self.socket = None
     
     def send_message(self, message):
-
         data = message.encode(self.FORMAT)
-
         pre_data = str(len(data)).encode(self.FORMAT)
         pre_data += (b" " * (self.HEADER - len(pre_data)))
         self.socket.send(pre_data)
-
         self.socket.send(data)
     
     def handle_close(self):

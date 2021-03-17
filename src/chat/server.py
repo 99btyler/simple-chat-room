@@ -6,8 +6,11 @@ import tkinter as tk
 class Server():
 
     def __init__(self):
+
         self.toplevel = None
         self.socket = None
+
+        self.client_sockets = []
     
     def launch(self):
 
@@ -53,6 +56,7 @@ class Server():
     
     def handle_client(self, client_socket, client_address):
         print(f"{self.ADDRESS}: {client_address} connected")
+        self.client_sockets.append(client_socket)
         while True:
             data = client_socket.recv(self.HEADER).decode(self.FORMAT) # waits until the client sends message
             message_length = int(data)
@@ -60,9 +64,17 @@ class Server():
             if message == self.COMMAND_DISCONNECT:
                 break
             else:
-                print(f"{self.ADDRESS}: \"{message}\" sent by {client_address}")
+                self.update_client_sockets(message)
         client_socket.close()
         print(f"{self.ADDRESS}: {client_address} disconnected")
+    
+    def update_client_sockets(self, message):
+        for client_socket in self.client_sockets:
+            data = message.encode(self.FORMAT)
+            pre_data = str(len(data)).encode(self.FORMAT)
+            pre_data += (b" " * (self.HEADER - len(pre_data)))
+            client_socket.send(pre_data)
+            client_socket.send(data)
     
     def handle_close(self):
 
