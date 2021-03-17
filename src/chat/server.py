@@ -31,7 +31,7 @@ class Server():
         self.FORMAT = "utf-8"
         self.COMMAND_DISCONNECT = "!disconnect"
         
-        self.HOST = socket.gethostbyname("localhost")
+        self.HOST = socket.gethostbyname(socket.gethostname())
         self.PORT = 5050
         self.ADDRESS = (self.HOST, self.PORT)
 
