@@ -9,6 +9,8 @@ class Launcher():
 
     def __init__(self):
 
+        self.PRINT_TAG = "[LAUNCHER]"
+
         self.client = Client()
         self.server = Server()
         
@@ -23,30 +25,27 @@ class Launcher():
         self.frame.grid()
 
         # Tkinter widgets
-        self.button_launchclient = ttk.Button(self.frame, text="Client", command=lambda:self.launch(self.client))
+        self.button_launchclient = ttk.Button(self.frame, text="Client", command=lambda:self.launch_thing(self.client))
         self.button_launchclient["padding"] = 50
         self.button_launchclient.grid()
 
-        self.button_launchserver = ttk.Button(self.frame, text="Server", command=lambda:self.launch(self.server))
+        self.button_launchserver = ttk.Button(self.frame, text="Server", command=lambda:self.launch_thing(self.server))
         self.button_launchserver["padding"] = 50
         self.button_launchserver.grid()
 
         # Tkinter mainloop
         self.root.mainloop()
     
-    def launch(self, thing):
-        thing.launch()
+    def launch_thing(self, thing):
+        if thing.toplevel == None and thing.socket == None:
+            print(f"{self.PRINT_TAG}: Launching {thing}...")
+            thing.launch()
     
     def handle_close(self):
-
         if not self.server.socket == None:
             self.server.socket.close()
             self.server.socket = None
-        
-        if not self.server.toplevel == None:
-            self.server.toplevel.destroy()
-            self.server.toplevel = None
-
+            print(f"{self.PRINT_TAG}: Server's socket closed and set to None")
         self.root.destroy()
 
 
