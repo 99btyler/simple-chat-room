@@ -1,5 +1,5 @@
 # simple-chat-room
-...
+![simple-chat-room gif](https://i.imgur.com/CfBRXme.gif)
 
 # Getting Started
 Get this project set up locally
