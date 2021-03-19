@@ -112,6 +112,7 @@ class Client():
         header_data += (b" " * (self.HEADER - len(header_data)))
         self.socket.send(header_data)
         self.socket.send(data)
+        self.entry_input.delete(0, tk.END)
     
     def handle_close(self):
         if not self.socket == None:
