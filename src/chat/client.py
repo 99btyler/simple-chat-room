@@ -81,7 +81,7 @@ class Client():
         for widget_to_destroy in self.widgets_to_destroy:
             widget_to_destroy.destroy()
         
-        self.text_messages = tk.Text(self.toplevel)
+        self.text_messages = tk.Text(self.toplevel, state=tk.DISABLED)
         self.text_messages.grid()
 
         self.stringvar_input = tk.StringVar()
@@ -101,7 +101,9 @@ class Client():
                     print(f"{self.PRINT_TAG}: OMG! AN ERROR FROM SERVER! SHUT IT DOWN!")
                     self.handle_close()
                 print(f"{self.PRINT_TAG}: Client received message from server")
+                self.text_messages.configure(state=tk.NORMAL)
                 self.text_messages.insert(tk.END, message)
+                self.text_messages.configure(state=tk.DISABLED)
             except Exception as e:
                 print(f"{self.PRINT_TAG}: {e}")
                 break
