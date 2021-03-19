@@ -25,12 +25,10 @@ class Launcher():
         self.frame.grid()
 
         # Tkinter widgets
-        self.button_launchclient = ttk.Button(self.frame, text="Client", command=lambda:self.launch_thing(self.client))
-        self.button_launchclient["padding"] = 50
+        self.button_launchclient = ttk.Button(self.frame, text="Client", padding=50, command=lambda:self.launch_thing(self.client))
         self.button_launchclient.grid()
 
-        self.button_launchserver = ttk.Button(self.frame, text="Server", command=lambda:self.launch_thing(self.server))
-        self.button_launchserver["padding"] = 50
+        self.button_launchserver = ttk.Button(self.frame, text="Server", padding=50, command=lambda:self.launch_thing(self.server))
         self.button_launchserver.grid()
 
         # Tkinter mainloop
