@@ -70,7 +70,8 @@ class Server():
             else:
                 print(f"{self.PRINT_TAG}: OMG! NO DATA FROM {client_address}")
                 client_socket.close()
-                print(f"{self.PRINT_TAG}: Server closed client_socket of {client_address}")
+                self.client_sockets.remove(client_socket)
+                print(f"{self.PRINT_TAG}: Server closed and removed client_socket of {client_address}")
                 break
     
     def alert_client_sockets(self, message):
