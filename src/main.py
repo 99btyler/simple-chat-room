@@ -46,4 +46,6 @@ class Launcher():
         self.root.destroy()
 
 
-Launcher()
+if __name__ == "__main__":
+    Launcher()
+
