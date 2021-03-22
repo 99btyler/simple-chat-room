@@ -7,7 +7,7 @@ class Client():
 
     def __init__(self):
         
-        self.PRINT_TAG = "[CLIENT]"
+        self.print_tag = "[CLIENT]"
 
         self.toplevel = None
         self.socket = None
@@ -18,8 +18,8 @@ class Client():
         self.toplevel = tk.Toplevel()
         self.toplevel.title("client")
         self.toplevel.resizable(False, False)
-        self.toplevel.protocol("WM_DELETE_WINDOW", self.handle_close)
-        print(f"{self.PRINT_TAG}: Client's toplevel launched!")
+        self.toplevel.protocol("WM_DELETE_WINDOW", self.__handle_close)
+        print(f"{self.print_tag}: Client's toplevel launched!")
 
         # toplevel widgets
         self.label_host = tk.Label(self.toplevel, text="Host:")
@@ -36,44 +36,44 @@ class Client():
         self.entry_port = tk.Entry(self.toplevel, textvariable=self.stringvar_port)
         self.entry_port.grid(row=1, column=1)
 
-        self.button_connect = tk.Button(self.toplevel, text="Connect", command=self.connect)
+        self.button_connect = tk.Button(self.toplevel, text="Connect", command=self.__connect)
         self.button_connect.grid()
 
         # socket
-        self.FORMAT = "utf-8"
-        self.HEADER = 64
-        self.ALERT_ERROR = "!ERROR"
+        self.format = "utf-8"
+        self.header = 64
+        self.alert_error = "!ERROR"
 
-        self.HOST = None
-        self.PORT = None
-        self.ADDRESS = None
+        self.host = None
+        self.port = None
+        self.address = None
     
-    def connect(self):
+    def __connect(self):
 
         # socket continued
         if not self.socket == None:
             return
         
-        self.HOST = self.stringvar_host.get() # 000.000.000.000
-        if len(self.HOST.split(".")) < 4:
+        self.host = self.stringvar_host.get() # 000.000.000.000
+        if len(self.host.split(".")) < 4:
             return
         
-        self.PORT = int(self.stringvar_port.get()) # range is 1024 to 65535
-        if self.PORT < 1024 or self.PORT > 65535:
+        self.port = int(self.stringvar_port.get()) # range is 1024 to 65535
+        if self.port < 1024 or self.port > 65535:
             return
         
-        self.ADDRESS = (self.HOST, self.PORT)
+        self.address = (self.host, self.port)
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            self.socket.connect(self.ADDRESS)
-            print(f"{self.PRINT_TAG}: Client's socket connected to {self.ADDRESS}!")
-            threading.Thread(target=self.handle_connection).start()
+            self.socket.connect(self.address)
+            print(f"{self.print_tag}: Client's socket connected to {self.address}!")
+            threading.Thread(target=self.__handle_connection).start()
         except Exception as e:
-            print(f"{self.PRINT_TAG}: {e}")
-            print(f"{self.PRINT_TAG}: Client's socket couldn't connect to {self.ADDRESS}")
+            print(f"{self.print_tag}: {e}")
+            print(f"{self.print_tag}: Client's socket couldn't connect to {self.address}")
             self.socket = None
-            print(f"{self.PRINT_TAG}: Client's socket set to None")
+            print(f"{self.print_tag}: Client's socket set to None")
             return
         
         # more toplevel widgets
@@ -88,39 +88,39 @@ class Client():
         self.entry_input = tk.Entry(self.toplevel, textvariable=self.stringvar_input)
         self.entry_input.grid()
 
-        self.button_send = tk.Button(self.toplevel, text="Send", command=lambda:self.send_message(self.stringvar_input.get()))
+        self.button_send = tk.Button(self.toplevel, text="Send", command=lambda:self.__send_message(self.stringvar_input.get()))
         self.button_send.grid()
     
-    def handle_connection(self):
+    def __handle_connection(self):
         while True:
             try:
-                header_data = self.socket.recv(self.HEADER).decode(self.FORMAT) # waits here until the client receives a message
+                header_data = self.socket.recv(self.header).decode(self.format) # waits here until the client receives a message
                 header_data_length = int(header_data)
-                message = self.socket.recv(header_data_length).decode(self.FORMAT)
-                if message == self.ALERT_ERROR:
-                    print(f"{self.PRINT_TAG}: OMG! AN ERROR FROM SERVER! SHUT IT DOWN!")
+                message = self.socket.recv(header_data_length).decode(self.format)
+                if message == self.alert_error:
+                    print(f"{self.print_tag}: OMG! AN ERROR FROM SERVER! SHUT IT DOWN!")
                     self.handle_close()
-                print(f"{self.PRINT_TAG}: Client received message from server")
+                print(f"{self.print_tag}: Client received message from server")
                 self.text_messages.configure(state=tk.NORMAL)
                 self.text_messages.insert(tk.END, message)
                 self.text_messages.configure(state=tk.DISABLED)
             except Exception as e:
-                print(f"{self.PRINT_TAG}: {e}")
+                print(f"{self.print_tag}: {e}")
                 break
     
-    def send_message(self, message):
-        data = message.encode(self.FORMAT)
-        header_data = str(len(data)).encode(self.FORMAT)
-        header_data += (b" " * (self.HEADER - len(header_data)))
+    def __send_message(self, message):
+        data = message.encode(self.format)
+        header_data = str(len(data)).encode(self.format)
+        header_data += (b" " * (self.header - len(header_data)))
         self.socket.send(header_data)
         self.socket.send(data)
         self.entry_input.delete(0, tk.END)
     
-    def handle_close(self):
+    def __handle_close(self):
         if not self.socket == None:
             self.socket.close()
             self.socket = None
-            print(f"{self.PRINT_TAG}: Client's socket closed and set to None")
+            print(f"{self.print_tag}: Client's socket closed and set to None")
         self.toplevel.destroy()
         self.toplevel = None
-        print(f"{self.PRINT_TAG}: Client's toplevel destroyed and set to None")
+        print(f"{self.print_tag}: Client's toplevel destroyed and set to None")
