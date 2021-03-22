@@ -35,9 +35,8 @@ class Launcher():
         self.root.mainloop()
     
     def __launch_thing(self, thing):
-        if thing.toplevel == None and thing.socket == None:
-            print(f"{self.print_tag}: Launching {thing}...")
-            thing.launch()
+        print(f"{self.print_tag}: Trying to launch {thing}...")
+        thing.launch()
     
     def __handle_close(self):
         if not self.server.socket == None:

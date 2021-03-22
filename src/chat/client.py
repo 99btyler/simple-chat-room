@@ -14,6 +14,10 @@ class Client():
     
     def launch(self):
 
+        if not (self.toplevel == None and self.socket == None):
+            print(f"{self.print_tag}: FAIL. Client is already launched")
+            return
+
         # toplevel
         self.toplevel = tk.Toplevel()
         self.toplevel.title("client")
