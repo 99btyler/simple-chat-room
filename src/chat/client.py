@@ -99,7 +99,7 @@ class Client():
                 message = self.socket.recv(header_data_length).decode(self.format)
                 if message == self.alert_error:
                     print(f"{self.print_tag}: OMG! AN ERROR FROM SERVER! SHUT IT DOWN!")
-                    self.handle_close()
+                    self.__handle_close()
                 print(f"{self.print_tag}: Client received message from server")
                 self.text_messages.configure(state=tk.NORMAL)
                 self.text_messages.insert(tk.END, message)
