@@ -6,11 +6,11 @@ import tkinter as tk
 class Client():
 
     def __init__(self):
-        
-        self.print_tag = "[CLIENT]"
 
         self.toplevel = None
         self.socket = None
+
+        self.print_tag = "[CLIENT]"
     
     def launch(self):
 
@@ -104,6 +104,7 @@ class Client():
                 if message == self.alert_error:
                     print(f"{self.print_tag}: OMG! AN ERROR FROM SERVER! SHUT IT DOWN!")
                     self.__handle_close()
+                    break
                 print(f"{self.print_tag}: Client received message from server")
                 self.text_messages.configure(state=tk.NORMAL)
                 self.text_messages.insert(tk.END, message)

@@ -7,10 +7,10 @@ class Server():
 
     def __init__(self):
 
-        self.print_tag = "[SERVER]"
-
         self.toplevel = None
         self.socket = None
+
+        self.print_tag = "[SERVER]"
 
         self.client_sockets = []
     

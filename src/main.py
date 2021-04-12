@@ -9,10 +9,10 @@ class Launcher():
 
     def __init__(self):
 
-        self.print_tag = "[LAUNCHER]"
-
         self.client = Client()
         self.server = Server()
+
+        self.print_tag = "[LAUNCHER]"
         
         # Tkinter root
         self.root = tk.Tk()
