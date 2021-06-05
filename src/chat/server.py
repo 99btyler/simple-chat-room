@@ -32,7 +32,15 @@ class Server():
         self.format = "utf-8"
         self.alert_error = "!ERROR"
 
-        self.host = socket.gethostbyname(socket.gethostname())
+        try:
+            self.host = socket.gethostbyname(socket.gethostname())
+        except:
+            print(f"{self.print_tag}: FAIL. Server couldn't get host")
+            self.toplevel.destroy()
+            self.toplevel = None
+            print(f"{self.print_tag}: Server's toplevel destroyed and set to None")
+            return
+
         self.port = 5050
         self.address = (self.host, self.port)
 
