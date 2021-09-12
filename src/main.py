@@ -25,18 +25,14 @@ class Launcher():
         self.frame.grid()
 
         # Tkinter widgets
-        self.button_launchclient = ttk.Button(self.frame, text="Client", padding=50, command=lambda:self.__launch_thing(self.client))
+        self.button_launchclient = ttk.Button(self.frame, text="Client", padding=50, command=lambda:self.client.launch())
         self.button_launchclient.grid()
 
-        self.button_launchserver = ttk.Button(self.frame, text="Server", padding=50, command=lambda:self.__launch_thing(self.server))
+        self.button_launchserver = ttk.Button(self.frame, text="Server", padding=50, command=lambda:self.server.launch())
         self.button_launchserver.grid()
 
         # Tkinter mainloop
         self.root.mainloop()
-    
-    def __launch_thing(self, thing):
-        print(f"{self.print_tag}: Trying to launch {thing}...")
-        thing.launch()
     
     def __handle_close(self):
         if not self.server.socket == None:
