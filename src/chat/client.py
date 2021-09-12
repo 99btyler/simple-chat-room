@@ -102,7 +102,7 @@ class Client():
                 header_data_length = int(header_data)
                 message = self.socket.recv(header_data_length).decode(self.format)
                 if message == self.alert_error:
-                    print(f"{self.print_tag}: OMG! AN ERROR FROM SERVER! SHUT IT DOWN!")
+                    print(f"{self.print_tag}: ERROR FROM SERVER!")
                     self.__handle_close()
                     break
                 print(f"{self.print_tag}: Client received message from server")

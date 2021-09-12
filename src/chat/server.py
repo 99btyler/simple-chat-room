@@ -80,7 +80,7 @@ class Server():
                 print(f"{self.print_tag}: Server is alerting all client_sockets of message...")
                 self.__alert_client_sockets(f"{client_address}: {message}\n")
             else:
-                print(f"{self.print_tag}: OMG! NO DATA FROM {client_address}")
+                print(f"{self.print_tag}: NO DATA FROM {client_address}")
                 client_socket.close()
                 self.client_sockets.remove(client_socket)
                 print(f"{self.print_tag}: Server closed and removed client_socket of {client_address}")
